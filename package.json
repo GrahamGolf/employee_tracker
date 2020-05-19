@@ -1,0 +1,25 @@
+{
+  "name": "employee_tracker",
+  "version": "1.0.0",
+  "description": "Solution for managing a company's employees using node, inquirer, and MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrahamGolf/employee_tracker.git"
+  },
+  "author": "Steven Langlois",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GrahamGolf/employee_tracker/issues"
+  },
+  "homepage": "https://github.com/GrahamGolf/employee_tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.1.0",
+    "mysql": "^2.18.1",
+    "dotenv": "^8.2.0"
+  }
+}
