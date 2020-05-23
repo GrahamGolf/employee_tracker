@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const consoleTable = require("console.table");
+const cTable = require("console.table");
 const dB = require("./db");
 
 async function viewEmployees () {
@@ -28,11 +28,12 @@ async function departmentAddNew () {
                 message: "What is the name of the department you would like to add",
                 name: "name"
             }
-        ]).then(async function (answer){
+        ])
+        .then(async function (answer){
             console.log(answer)
             const newDept = await dB.addDepartment(answer);
-            console.log(newDept)
-            await promptUser()
+            console.log(newDept);
+            viewDepartments();
         })
 };
 
@@ -55,11 +56,12 @@ async function roleAddNew () {
                 message: 'Which department id is this role for?',
                 name: 'department_id'
             },
-        ]).then(async function (answer){
+        ])
+        .then(async function (answer){
             console.log(answer)
             const newRole = await dB.addRole(answer);
-            console.log(newRole)
-            await promptUser()
+            console.log(newRole);
+            viewRoles();
         })
 };
 
@@ -67,30 +69,31 @@ async function employeeAddNew () {
     inquirer
         .prompt([
             {
-                type: "input",
-                message: "What is the first name of the employee you would like to add",
-                name: "first_name"
+            type: "input",
+            message: "What is the first name of the employee you would like to add",
+            name: "first_name"
             },
             {
-                type: "input",
-                message: "What is the last name of the employee you would like to add",
-                name: "last_name"
+            type: "input",
+            message: "What is the last name of the employee you would like to add",
+            name: "last_name"
             },
             {
-                type: "input",
-                message: "What is the employee's role id?",
-                name: "role_id"
+            type: "input",
+            message: "What is the employee's role id?",
+            name: "role_id"
             },
             {
-                type: "input",
-                message: "What is the employee's manager's id?",
-                name: "manager_id"
+            type: "input",
+            message: "What is the employee's manager's id?",
+            name: "manager_id"
             },
-        ]).then(async function (answer){
+        ])
+        .then(async function (answer){
             console.log(answer)
             const newEmployee = await dB.addEmployee(answer);
             console.log(newEmployee);
-            await promptUser()
+            viewEmployees();
         })
 };
 
@@ -132,8 +135,8 @@ async function updateEmplRole () {
         ]).then(async function (answer){
             console.log(answer)
             const updRole = await dB.updateEmployeeRole(answer.role_id, answer.id);
-            console.log(updRole)
-            await promptUser()
+            console.log(updRole);
+            viewEmployees();
         })
 };
 
@@ -160,7 +163,6 @@ function promptUser() {
                 name: "start",
             },
         ])
- 
         .then(function (answer) {
             console.log("\n", answer);
             message = answer.start;
@@ -203,5 +205,4 @@ function promptUser() {
             }
         })    
     }
-    
 promptUser()
