@@ -11,11 +11,13 @@ async function viewEmployees () {
 async function viewRoles () {
     const roles = await dB.findRoles();
     console.table(roles);
+    promptUser()
 };
 
 async function viewDepartments () {
     const departments = await dB.findDepartments();
     console.table(departments);
+    promptUser()
 };
 
 async function departmentAddNew () {
@@ -30,6 +32,7 @@ async function departmentAddNew () {
             console.log(answer)
             const newDept = await dB.addDepartment(answer);
             console.log(newDept)
+            await promptUser()
         })
 };
 
@@ -56,6 +59,7 @@ async function roleAddNew () {
             console.log(answer)
             const newRole = await dB.addRole(answer);
             console.log(newRole)
+            await promptUser()
         })
 };
 
@@ -85,7 +89,8 @@ async function employeeAddNew () {
         ]).then(async function (answer){
             console.log(answer)
             const newEmployee = await dB.addEmployee(answer);
-            console.log(newEmployee)
+            console.log(newEmployee);
+            await promptUser()
         })
 };
 
@@ -128,18 +133,9 @@ async function updateEmplRole () {
             console.log(answer)
             const updRole = await dB.updateEmployeeRole(answer.role_id, answer.id);
             console.log(updRole)
+            await promptUser()
         })
 };
-
-
-
-// viewEmployees();
-// viewRoles();
-// viewDepartments();
-// departmentAddNew();
-// roleAddNew();
-// employeeAddNew(); 
-// updateEmplRole();
 
 
 function promptUser() {
@@ -150,27 +146,14 @@ function promptUser() {
                 message: "What would you like to do? \n Choose 'Exit' to close the program.\n",
                 choices: [
                     "----------------------------------------",
-                    "View ALL Employees",
-                    "View ALL Employees by Department",
-                    "View ALL Employees by Manager",
+                    "VIEW Employees",
+                    "VIEW Roles",
+                    "VIEW Departments",
                     "----------------------------------------",
-                    "ADD an Employee",
-                    "REMOVE an Employee",
+                    "ADD New Employee",
+                    "ADD New Role",
+                    "ADD New Department",
                     "UPDATE Employee Role",
-                    "Update Employee Manager",
-                    "Update Employee Department",
-                    "----------------------------------------",
-                    "View all Roles",
-                    "Add a Role",
-                    "Remove a Role",
-                    "----------------------------------------",
-                    "View all Managers",
-                    "Add Manager",
-                    "Remove a Manager",
-                    "----------------------------------------",
-                    "View all Departments",
-                    "Add a Department",
-                    "Remove a Department",
                     "----------------------------------------",
                     "Exit"
                 ],
@@ -186,72 +169,32 @@ function promptUser() {
                     console.clear();
                     break;
 
-                case "View ALL Employees":
+                case "VIEW Employees":
                     viewEmployees();
                     break;
 
-                // case "View ALL Employees by Department":
-                //     //empDpt(message);
-                //     break;
-
-                // case "View ALL Employees by Manager":
-                //     empMgr();
-                //     break;
-
-                case "ADD an Employee":
-                    addEmployee();
-                    break;
-
-                case "REMOVE an Employee":
-                    removeEmployee();
-                    break;
-
-                case "UPDATE Employee Role":
-                    updEmpRole();
-                    break;
-
-                // case "Update Employee Manager":
-                //     updEmpMgr();
-                //     break;
-
-                // case "Update Employee Department":
-                //     updEmpDept();
-                //     break;
-
-                case "View all Roles":
+                case "VIEW Roles":
                     viewRoles();
                     break;
 
-                case "Add a Role":
-                    addRole();
-                    break;
-
-                case "Remove a Role":
-                    removeRole();
-                    break;
-
-                // case "View all Managers":
-                //     viewManagers();
-                //     break;
-
-                case "Add Manager":
-                    addManager();
-                    break;
-
-                case "Remove a Manager":
-                    removeMgr();
-                    break;
-
-                case "View all Departments":
+                case "VIEW Departments":
                     viewDepartments();
                     break;
 
-                case "Add a Department":
-                    addDept();
+                case "ADD New Employee":
+                    employeeAddNew();
+                    break;
+                
+                case "ADD New Role":
+                    roleAddNew();
                     break;
 
-                case "Remove a Department":
-                    removeDept();
+                case "ADD New Department":
+                    departmentAddNew();
+                    break;
+                
+                case "UPDATE Employee Role":
+                    updateEmplRole();
                     break;
 
                 case "Exit":
@@ -262,11 +205,3 @@ function promptUser() {
     }
     
 promptUser()
-
-
-//Ask user what they want to do
-//Add employees, department, roles
-//To add employees, i have to get roles
-//To add roles, i need department id
-//To update employees roles, i need roles
-//Update employee roles
