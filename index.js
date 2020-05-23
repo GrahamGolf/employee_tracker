@@ -5,6 +5,7 @@ const dB = require("./db");
 async function viewEmployees () {
     const employees = await dB.findEmployees();
     console.table(employees);
+    promptUser()
 };
 
 async function viewRoles () {
@@ -94,11 +95,20 @@ async function updateEmplRole () {
     for (let index = 0; index < employees.length; index++) {
         let employee = {};
         employee.value = employees[index].id;
-        employee.name = employees[index].last_name + employees[index].first_name;
+        employee.name = employees[index].last_name + ", " + employees[index].first_name;
         employeeListing.push(employee)
     }
 
-    console.log(employeeListing)
+    const roles = await dB.findRoles();
+    const rolesListing = [];
+    for (let index = 0; index < roles.length; index++) {
+        let roleObject = {};
+        roleObject.value = roles[index].id;
+        roleObject.name = roles[index].title;
+        rolesListing.push(roleObject)
+    }
+
+    console.log(rolesListing)
 
     inquirer
         .prompt([
@@ -109,8 +119,9 @@ async function updateEmplRole () {
                 name: "id"
             },
             {
-                type: "input",
+                type: "list",
                 message: "What is the new role id?",
+                choices: rolesListing,
                 name: "role_id"
             }
         ]).then(async function (answer){
@@ -120,7 +131,6 @@ async function updateEmplRole () {
         })
 };
 
-// * Update employee roles
 
 
 // viewEmployees();
@@ -128,8 +138,8 @@ async function updateEmplRole () {
 // viewDepartments();
 // departmentAddNew();
 // roleAddNew();
-//employeeAddNew(); 
-updateEmplRole();
+// employeeAddNew(); 
+// updateEmplRole();
 
 
 function promptUser() {
@@ -251,7 +261,7 @@ function promptUser() {
         })    
     }
     
-//promptUser()
+promptUser()
 
 
 //Ask user what they want to do
