@@ -13,6 +13,15 @@ class Db {
     findDepartments () {
         return this.connection.query ("SELECT * FROM employeedb.department;")
     }
+    addDepartment (newDepartment) {
+        return this.connection.query ("INSERT INTO employeedb.department SET ?", newDepartment)
+    }
+    addRole (newRole) {
+        return this.connection.query ("INSERT INTO employeedb.role SET ?", newRole)
+    }
+    addEmployee (newEmployee) {
+        return this.connection.query ("INSERT INTO employeedb.employee SET ?", newEmployee)
+    }
 };
 
 
