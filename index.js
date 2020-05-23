@@ -116,8 +116,6 @@ async function updateEmplRole () {
         rolesListing.push(roleObject)
     }
 
-    console.log(rolesListing)
-
     inquirer
         .prompt([
             {
