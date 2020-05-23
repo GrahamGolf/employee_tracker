@@ -22,6 +22,9 @@ class Db {
     addEmployee (newEmployee) {
         return this.connection.query ("INSERT INTO employeedb.employee SET ?", newEmployee)
     }
+    updateEmployeeRole (role_id, id) {
+        return this.connection.query ("UPDATE employee SET role_id = ? WHERE id = ?", [role_id, id])
+    }
 };
 
 

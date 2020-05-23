@@ -33,22 +33,23 @@ async function departmentAddNew () {
 };
 
 async function roleAddNew () {
+    console.log("role function start")
     inquirer
         .prompt([
             {
                 type: 'input',
                 message: 'What is the name of the role you would like to add',
-                title: 'role'
+                name: 'title'
             },
             {
                 type: 'input',
                 message: 'What is the salary for this role?',   
-                salary: 'salary' 
+                name: 'salary' 
             },
             {
                 type: 'input',
                 message: 'Which department id is this role for?',
-                department_id: 'department_id'
+                name: 'department_id'
             },
         ]).then(async function (answer){
             console.log(answer)
@@ -63,22 +64,22 @@ async function employeeAddNew () {
             {
                 type: "input",
                 message: "What is the first name of the employee you would like to add",
-                first_name: "first_name"
+                name: "first_name"
             },
             {
                 type: "input",
                 message: "What is the last name of the employee you would like to add",
-                last_name: "last_name"
+                name: "last_name"
             },
             {
                 type: "input",
                 message: "What is the employee's role id?",
-                role_id: "role_id"
+                name: "role_id"
             },
             {
                 type: "input",
                 message: "What is the employee's manager's id?",
-                manager_id: "manager_id"
+                name: "manager_id"
             },
         ]).then(async function (answer){
             console.log(answer)
@@ -87,6 +88,37 @@ async function employeeAddNew () {
         })
 };
 
+async function updateEmplRole () {
+    const employees = await dB.findEmployees();
+    const employeeListing = [];
+    for (let index = 0; index < employees.length; index++) {
+        let employee = {};
+        employee.value = employees[index].id;
+        employee.name = employees[index].last_name + employees[index].first_name;
+        employeeListing.push(employee)
+    }
+
+    console.log(employeeListing)
+
+    inquirer
+        .prompt([
+            {
+                type: "list",
+                message: "Which employee would you like to update?",
+                choices: employeeListing,
+                name: "id"
+            },
+            {
+                type: "input",
+                message: "What is the new role id?",
+                name: "role_id"
+            }
+        ]).then(async function (answer){
+            console.log(answer)
+            const updRole = await dB.updateEmployeeRole(answer.role_id, answer.id);
+            console.log(updRole)
+        })
+};
 
 // * Update employee roles
 
@@ -96,7 +128,8 @@ async function employeeAddNew () {
 // viewDepartments();
 // departmentAddNew();
 // roleAddNew();
-// employeeAddNew(); 
+//employeeAddNew(); 
+updateEmplRole();
 
 
 function promptUser() {
